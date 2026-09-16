@@ -1,0 +1,113 @@
+﻿{% extends 'base.html' %}
+{% load core_tags %}
+
+{% block title %}SuperAdmin Global Console - EduTech{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-3 mb-4 border-bottom">
+    <div>
+        <h1 class="h2 fw-bold text-dark mb-0">SuperAdmin Global Governance Console</h1>
+        <small class="text-muted">System Health, Global Audit Trail, Multi-Tenant Hierarchy</small>
+    </div>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{% url 'institutions:institution_create' %}" class="btn btn-primary btn-sm me-2">
+            <i class="bi bi-plus-circle me-1"></i> Provision Institution
+        </a>
+        <a href="{% url 'accounts:user_list' %}" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-people me-1"></i> User Directory
+        </a>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-3 bg-white p-3">
+            <div class="d-flex align-items-center">
+                <div class="rounded-3 bg-primary bg-opacity-10 p-3 me-3 text-primary">
+                    <i class="bi bi-buildings fs-3"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-1 small text-uppercase fw-bold">Total Campuses</h6>
+                    <h3 class="fw-bold mb-0">12</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-3 bg-white p-3">
+            <div class="d-flex align-items-center">
+                <div class="rounded-3 bg-success bg-opacity-10 p-3 me-3 text-success">
+                    <i class="bi bi-people fs-3"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-1 small text-uppercase fw-bold">Active Students</h6>
+                    <h3 class="fw-bold mb-0">54,230</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-3 bg-white p-3">
+            <div class="d-flex align-items-center">
+                <div class="rounded-3 bg-info bg-opacity-10 p-3 me-3 text-info">
+                    <i class="bi bi-journal-text fs-3"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-1 small text-uppercase fw-bold">Course Units</h6>
+                    <h3 class="fw-bold mb-0">1,420</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm rounded-3 bg-white p-3">
+            <div class="d-flex align-items-center">
+                <div class="rounded-3 bg-warning bg-opacity-10 p-3 me-3 text-dark">
+                    <i class="bi bi-shield-check fs-3"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-1 small text-uppercase fw-bold">Security Status</h6>
+                    <h4 class="fw-bold mb-0 text-success">Optimal</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+        <h5 class="fw-bold mb-0"><i class="bi bi-clock-history me-2 text-primary"></i> Real-Time Audit Log Feed</h5>
+        <span class="badge bg-primary">Live Auditing Active</span>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Action</th>
+                    <th>Entity</th>
+                    <th>Actor</th>
+                    <th>IP Address</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in recent_audit_logs %}
+                    <tr>
+                        <td><small class="text-muted">{{ log.created_at|date:"Y-m-d H:i:s" }}</small></td>
+                        <td>{{ log.action|badge_status }}</td>
+                        <td><strong>{{ log.entity_name }}</strong></td>
+                        <td>{{ log.user.get_full_name|default:log.user.username|default:"System" }}</td>
+                        <td><code>{{ log.ip_address|default:"127.0.0.1" }}</code></td>
+                        <td><span class="badge bg-success">HTTP {{ log.status_code|default:200 }}</span></td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center py-4 text-muted">No security audit logs recorded yet.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

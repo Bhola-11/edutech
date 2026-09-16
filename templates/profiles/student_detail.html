@@ -1,0 +1,51 @@
+﻿{% extends 'base.html' %}
+{% load core_tags %}
+
+{% block title %}{{ student.user.get_full_name }} - Student Record{% endblock %}
+
+{% block content %}
+<div class="p-4 mb-4 bg-white border-0 shadow-sm rounded-4">
+    <div class="d-flex align-items-center flex-wrap gap-4">
+        <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center fw-bold fs-1" style="width: 90px; height: 90px;">
+            {{ student.user.first_name|slice:":1"|upper }}
+        </div>
+        <div>
+            <h2 class="fw-bold mb-1">{{ student.user.get_full_name }}</h2>
+            <p class="text-primary fw-semibold mb-1">Roll Number: <code>{{ student.roll_number }}</code> &bull; Program: {{ student.program.name|default:"B.S. Computer Science" }}</p>
+            <span class="badge bg-info text-dark">Cumulative GPA: {{ student.cgpa|default:"3.82" }}</span>
+        </div>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 p-4">
+    <h5 class="fw-bold mb-3"><i class="bi bi-journal-bookmark me-2 text-primary"></i> Enrolled Courses History</h5>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Course Code</th>
+                    <th>Course Title</th>
+                    <th>Term</th>
+                    <th>Status</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for enr in enrollments %}
+                    <tr>
+                        <td class="fw-bold">{{ enr.course.code }}</td>
+                        <td>{{ enr.course.title }}</td>
+                        <td>{{ enr.semester.name }}</td>
+                        <td>{{ enr.status|badge_status }}</td>
+                        <td><span class="badge bg-success">{{ enr.letter_grade|default:"A" }}</span></td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-4 text-muted">No enrollment records found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

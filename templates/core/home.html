@@ -1,0 +1,71 @@
+﻿{% extends 'base.html' %}
+{% load static core_tags %}
+
+{% block title %}EduTech Enterprise LMS & University Campus Ecosystem{% endblock %}
+
+{% block unauth_content %}
+<div class="p-5 mb-5 bg-gradient rounded-4 text-white shadow-lg" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);">
+    <div class="container-fluid py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold mb-3"><i class="bi bi-stars me-1"></i> Next-Generation Higher Education ERP</span>
+                <h1 class="display-4 fw-bold mb-3">Empowering Global Higher Education & Corporate Learning</h1>
+                <p class="col-md-10 fs-5 mb-4 opacity-90">A comprehensive multi-campus Learning Management System, curriculum engine, proctored examinations, student records, and career placement platform.</p>
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="{% url 'courses:course_list' %}" class="btn btn-warning btn-lg px-4 fw-bold shadow-sm"><i class="bi bi-compass me-2"></i> Explore Courses</a>
+                    <a href="{% url 'accounts:register' %}" class="btn btn-outline-light btn-lg px-4"><i class="bi bi-person-plus me-2"></i> Create Free Account</a>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center mt-4 mt-lg-0">
+                <div class="bg-white text-dark p-4 rounded-4 shadow">
+                    <i class="bi bi-mortarboard fs-1 text-primary mb-2"></i>
+                    <h4 class="fw-bold">Enterprise Ready</h4>
+                    <p class="text-muted small">Supports 100,000+ concurrent students across multiple campuses and global departments.</p>
+                    <div class="border-top pt-3">
+                        <a href="{% url 'institutions:institution_list' %}" class="btn btn-primary w-100">View Campuses</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm rounded-4 p-3 text-center">
+            <div class="card-body">
+                <div class="rounded-circle bg-primary bg-opacity-10 text-primary mx-auto d-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
+                    <i class="bi bi-buildings-fill fs-3"></i>
+                </div>
+                <h5 class="card-title fw-bold">Multi-Campus Hierarchy</h5>
+                <p class="card-text text-muted">Decentralized institution administration, schools, academic departments, semester calendars, and classroom venue management.</p>
+                <a href="{% url 'institutions:institution_list' %}" class="btn btn-sm btn-outline-primary">Explore Campuses</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm rounded-4 p-3 text-center">
+            <div class="card-body">
+                <div class="rounded-circle bg-success bg-opacity-10 text-success mx-auto d-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
+                    <i class="bi bi-journal-check fs-3"></i>
+                </div>
+                <h5 class="card-title fw-bold">Outcome-Based Curriculum</h5>
+                <p class="card-text text-muted">Standardized degree programs, modular video lessons, interactive readings, and progressive checkpoint quizzes.</p>
+                <a href="{% url 'courses:course_list' %}" class="btn btn-sm btn-outline-success">Browse Catalog</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm rounded-4 p-3 text-center">
+            <div class="card-body">
+                <div class="rounded-circle bg-warning bg-opacity-10 text-warning mx-auto d-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
+                    <i class="bi bi-patch-check-fill fs-3 text-dark"></i>
+                </div>
+                <h5 class="card-title fw-bold">Admissions & Cohorts</h5>
+                <p class="card-text text-muted">Digital application portal, merit list processing, batch allocation, roll number generation, and course registration.</p>
+                <a href="{% url 'enrollments:cycle_list' %}" class="btn btn-sm btn-outline-dark">Admissions Open</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

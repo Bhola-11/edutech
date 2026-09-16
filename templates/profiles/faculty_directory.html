@@ -1,0 +1,37 @@
+﻿{% extends 'base.html' %}
+{% load core_tags %}
+
+{% block title %}Faculty & Instructor Directory - EduTech{% endblock %}
+
+{% block content %}
+<div class="pt-2 pb-3 mb-4 border-bottom">
+    <h1 class="h2 fw-bold text-dark mb-0">Faculty & Academic Staff Directory</h1>
+    <p class="text-muted mb-0">Distinguished professors, research chairs, course coordinators, and faculty advisors.</p>
+</div>
+
+<div class="row g-4">
+    {% for prof in faculty_list %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100 p-4 bg-white text-center d-flex flex-column justify-content-between">
+                <div>
+                    <div class="bg-primary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center fw-bold fs-2 mb-3" style="width: 80px; height: 80px;">
+                        {{ prof.user.first_name|slice:":1"|upper }}
+                    </div>
+                    <h5 class="fw-bold mb-1">{{ prof.user.get_full_name }}</h5>
+                    <span class="badge bg-light text-primary border mb-2">{{ prof.get_designation_display }}</span>
+                    <p class="text-muted small mb-2"><i class="bi bi-diagram-3 me-1"></i> {{ prof.user.department.name|default:"Computer Science & Engineering" }}</p>
+                    <p class="text-muted small">Office: {{ prof.office_room|default:"Science Hall Rm 402" }}</p>
+                </div>
+                <div class="border-top pt-3">
+                    <a href="{% url 'profiles:faculty_detail' pk=prof.pk %}" class="btn btn-outline-primary btn-sm w-100">View Academic Profile</a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-12 text-center py-5 text-muted">
+            <i class="bi bi-people fs-1"></i>
+            <h5 class="fw-bold mt-2">Faculty members will be indexed shortly.</h5>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

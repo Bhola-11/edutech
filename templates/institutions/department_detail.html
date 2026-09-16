@@ -1,0 +1,35 @@
+﻿{% extends 'base.html' %}
+{% load core_tags %}
+
+{% block title %}{{ department.name }} - Department Overview{% endblock %}
+
+{% block content %}
+<div class="p-4 mb-4 bg-white border-0 shadow-sm rounded-4">
+    <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <div>
+            <h2 class="fw-bold mb-1">{{ department.name }}</h2>
+            <p class="text-muted mb-0"><i class="bi bi-diagram-3 me-1"></i> Faculty of {{ department.faculty.name }} &bull; Code: {{ department.code }}</p>
+        </div>
+        <div>
+            <span class="badge bg-primary fs-6">{{ department.faculty.institution.name }}</span>
+        </div>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 p-4">
+    <h5 class="fw-bold mb-3"><i class="bi bi-journal-album me-2 text-primary"></i> Departmental Courses</h5>
+    <div class="list-group list-group-flush">
+        {% for course in department.courses.all %}
+            <a href="{% url 'courses:course_detail' slug=course.slug %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center px-0">
+                <div>
+                    <h6 class="fw-bold mb-1">{{ course.code }} - {{ course.title }}</h6>
+                    <small class="text-muted">{{ course.credit_hours }} Credits &bull; {{ course.get_academic_level_display }}</small>
+                </div>
+                <span class="badge bg-primary">View Course</span>
+            </a>
+        {% empty %}
+            <p class="text-muted small my-3">No courses listed under this department yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,90 @@
+﻿{% extends 'base.html' %}
+{% load core_tags %}
+
+{% block title %}Create Account - EduTech Enterprise LMS{% endblock %}
+
+{% block content_no_sidebar %}
+<div class="row justify-content-center my-5">
+    <div class="col-md-8 col-lg-7">
+        <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+            <div class="bg-primary text-white p-4 text-center">
+                <i class="bi bi-person-plus-fill fs-1 text-warning mb-2"></i>
+                <h3 class="fw-bold mb-1">Create Your EduTech Account</h3>
+                <p class="mb-0 small opacity-75">Join the higher education learning ecosystem</p>
+            </div>
+            <div class="card-body p-4 p-md-5">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger py-2 small">
+                            {% for error in form.non_field_errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">First Name</label>
+                            {{ form.first_name }}
+                            {% if form.first_name.errors %}<div class="text-danger small mt-1">{{ form.first_name.errors.0 }}</div>{% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Last Name</label>
+                            {{ form.last_name }}
+                            {% if form.last_name.errors %}<div class="text-danger small mt-1">{{ form.last_name.errors.0 }}</div>{% endif %}
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Username</label>
+                            {{ form.username }}
+                            {% if form.username.errors %}<div class="text-danger small mt-1">{{ form.username.errors.0 }}</div>{% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Email Address</label>
+                            {{ form.email }}
+                            {% if form.email.errors %}<div class="text-danger small mt-1">{{ form.email.errors.0 }}</div>{% endif %}
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Phone Number</label>
+                            {{ form.phone_number }}
+                            {% if form.phone_number.errors %}<div class="text-danger small mt-1">{{ form.phone_number.errors.0 }}</div>{% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Primary Role</label>
+                            {{ form.role }}
+                            {% if form.role.errors %}<div class="text-danger small mt-1">{{ form.role.errors.0 }}</div>{% endif %}
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Password</label>
+                            {{ form.password }}
+                            {% if form.password.errors %}<div class="text-danger small mt-1">{{ form.password.errors.0 }}</div>{% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Confirm Password</label>
+                            {{ form.confirm_password }}
+                            {% if form.confirm_password.errors %}<div class="text-danger small mt-1">{{ form.confirm_password.errors.0 }}</div>{% endif %}
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold shadow-sm">
+                        <i class="bi bi-check-circle-fill me-2"></i> Complete Registration
+                    </button>
+                </form>
+            </div>
+            <div class="card-footer bg-light py-3 text-center border-top">
+                <small class="text-muted">Already registered? <a href="{% url 'accounts:login' %}" class="fw-bold text-primary text-decoration-none">Sign In</a></small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

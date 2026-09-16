@@ -1,0 +1,20 @@
+﻿{% extends 'base.html' %}
+{% load core_tags %}
+
+{% block title %}Parent & Guardian Portal - EduTech{% endblock %}
+
+{% block content %}
+<div class="pt-2 pb-3 mb-4 border-bottom">
+    <h1 class="h2 fw-bold text-dark mb-0">Parent & Guardian Portal</h1>
+    <p class="text-muted mb-0">Track linked student academic progress, attendance records, and term report cards.</p>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 p-4 text-center">
+    <i class="bi bi-shield-heart fs-1 text-primary mb-3"></i>
+    <h4 class="fw-bold">Linked Student Academic Overview</h4>
+    <p class="text-muted">Student records are synchronized with campus registrar offices.</p>
+    <div class="mt-3">
+        <a href="{% url 'courses:course_list' %}" class="btn btn-primary">Explore Campus Curriculum</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+﻿{% extends 'base.html' %}
+{% load core_tags %}
+
+{% block title %}{{ application.application_number }} - Application Details{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-3 mb-4 border-bottom">
+    <div>
+        <h1 class="h2 fw-bold text-dark mb-0">Application {{ application.application_number }}</h1>
+        <p class="text-muted mb-0">Target Program: {{ application.cycle.program.name }} &bull; {{ application.cycle.session.name }}</p>
+    </div>
+    <div>
+        {{ application.status|badge_status }}
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-8">
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+            <h5 class="fw-bold mb-3">Applicant Statement of Purpose (SOP)</h5>
+            <div class="p-3 bg-light rounded-3 lh-lg">
+                {{ application.statement_of_purpose|linebreaks }}
+            </div>
+        </div>
+        
+        {% if application.review_notes %}
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+                <h5 class="fw-bold mb-2">Committee Review Comments</h5>
+                <p class="text-muted mb-0">{{ application.review_notes }}</p>
+                <small class="text-muted d-block mt-2">Reviewed on {{ application.reviewed_at|date:"F d, Y" }}</small>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+            <h5 class="fw-bold mb-3">Candidate Details</h5>
+            <p class="mb-1 text-muted small">Candidate Name:</p>
+            <p class="fw-semibold">{{ application.applicant.get_full_name }}</p>
+            <p class="mb-1 text-muted small">Prior Institution:</p>
+            <p class="fw-semibold">{{ application.prior_institution }}</p>
+            <p class="mb-1 text-muted small">Prior Academic Score:</p>
+            <p class="fw-semibold">{{ application.prior_gpa|default:"N/A" }} GPA</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+﻿{% extends 'base.html' %}
+{% load core_tags %}
+
+{% block title %}Manage Institution - EduTech{% endblock %}
+
+{% block content %}
+<div class="pt-2 pb-3 mb-4 border-bottom">
+    <h1 class="h2 fw-bold text-dark mb-0">Configure Institution</h1>
+    <p class="text-muted mb-0">Set up institution organizational identity, accreditations, and contact details.</p>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row g-3 mb-3">
+            <div class="col-md-8">
+                <label class="form-label fw-semibold">Institution Name</label>
+                {{ form.name }}
+            </div>
+            <div class="col-md-4">
+                <label class="form-label fw-semibold">Institution Code</label>
+                {{ form.code }}
+            </div>
+        </div>
+        <div class="row g-3 mb-3">
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Official Website</label>
+                {{ form.website }}
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Contact Email</label>
+                {{ form.contact_email }}
+            </div>
+        </div>
+        <div class="row g-3 mb-3">
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Contact Phone</label>
+                {{ form.contact_phone }}
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Established Year</label>
+                {{ form.established_year }}
+            </div>
+        </div>
+        <div class="row g-3 mb-3">
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">City</label>
+                {{ form.city }}
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Country</label>
+                {{ form.country }}
+            </div>
+        </div>
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Accreditation Agency</label>
+                {{ form.accreditation_body }}
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Status</label>
+                {{ form.status }}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary px-4">Save Institution Record</button>
+    </form>
+</div>
+{% endblock %}

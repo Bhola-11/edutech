@@ -1,0 +1,36 @@
+﻿{% extends 'base.html' %}
+{% load core_tags %}
+
+{% block title %}Submit Admission Application - EduTech{% endblock %}
+
+{% block content %}
+<div class="pt-2 pb-3 mb-4 border-bottom">
+    <h1 class="h2 fw-bold text-dark mb-0">Submit Online Admission Application</h1>
+    <p class="text-muted mb-0">Complete your academic profile and statement of purpose for review.</p>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Select Admission Program Cycle</label>
+            {{ form.cycle }}
+        </div>
+        <div class="row g-3 mb-3">
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Prior School / University</label>
+                {{ form.prior_institution }}
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Prior GPA / Percentage</label>
+                {{ form.prior_gpa }}
+            </div>
+        </div>
+        <div class="mb-4">
+            <label class="form-label fw-semibold">Statement of Purpose (SOP)</label>
+            {{ form.statement_of_purpose }}
+        </div>
+        <button type="submit" class="btn btn-primary px-4">Submit Application</button>
+    </form>
+</div>
+{% endblock %}

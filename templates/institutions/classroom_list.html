@@ -1,0 +1,46 @@
+﻿{% extends 'base.html' %}
+{% load core_tags %}
+
+{% block title %}Classrooms & Venue Allocation - EduTech{% endblock %}
+
+{% block content %}
+<div class="pt-2 pb-3 mb-4 border-bottom">
+    <h1 class="h2 fw-bold text-dark mb-0">Classrooms & Campus Facilities</h1>
+    <p class="text-muted mb-0">Physical lecture halls, specialized research laboratories, and virtual spaces.</p>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Venue / Room</th>
+                    <th>Campus</th>
+                    <th>Type</th>
+                    <th>Capacity</th>
+                    <th>Projector</th>
+                    <th>Smart Audio</th>
+                    <th>Wheelchair Access</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for room in classrooms %}
+                    <tr>
+                        <td class="fw-bold text-primary">{{ room.building }} - Rm {{ room.room_number }}</td>
+                        <td>{{ room.campus.name }}</td>
+                        <td><span class="badge bg-secondary">{{ room.get_room_type_display }}</span></td>
+                        <td>{{ room.seating_capacity }} Seats</td>
+                        <td>{% if room.has_projector %}<i class="bi bi-check-circle-fill text-success"></i>{% else %}<i class="bi bi-x-circle text-muted"></i>{% endif %}</td>
+                        <td>{% if room.has_audio_system %}<i class="bi bi-check-circle-fill text-success"></i>{% else %}<i class="bi bi-x-circle text-muted"></i>{% endif %}</td>
+                        <td>{% if room.is_accessible %}<i class="bi bi-check-circle-fill text-success"></i>{% else %}<i class="bi bi-x-circle text-muted"></i>{% endif %}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center py-4 text-muted">No classrooms recorded.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

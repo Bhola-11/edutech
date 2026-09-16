@@ -1,0 +1,43 @@
+﻿{% extends 'base.html' %}
+{% load core_tags %}
+
+{% block title %}Two-Factor Authentication Verification - EduTech{% endblock %}
+
+{% block content_no_sidebar %}
+<div class="row justify-content-center my-5">
+    <div class="col-md-5">
+        <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+            <div class="bg-dark text-white p-4 text-center">
+                <i class="bi bi-shield-lock-fill fs-1 text-warning mb-2"></i>
+                <h4 class="fw-bold mb-1">Two-Factor Verification</h4>
+                <p class="mb-0 small opacity-75">Enter your 6-digit security verification code</p>
+            </div>
+            <div class="card-body p-4 p-md-5 text-center">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger py-2 small">
+                            {% for error in form.non_field_errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold mb-3">Verification Code</label>
+                        {{ form.token_code }}
+                        {% if form.token_code.errors %}
+                            <div class="text-danger small mt-1">{{ form.token_code.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold">
+                        Verify & Continue
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

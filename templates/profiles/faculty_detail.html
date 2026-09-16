@@ -1,0 +1,49 @@
+﻿{% extends 'base.html' %}
+{% load core_tags %}
+
+{% block title %}{{ faculty.user.get_full_name }} - Academic Profile{% endblock %}
+
+{% block content %}
+<div class="p-4 mb-4 bg-white border-0 shadow-sm rounded-4">
+    <div class="d-flex align-items-center flex-wrap gap-4">
+        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold fs-1" style="width: 90px; height: 90px;">
+            {{ faculty.user.first_name|slice:":1"|upper }}
+        </div>
+        <div>
+            <h2 class="fw-bold mb-1">{{ faculty.user.get_full_name }}</h2>
+            <p class="text-primary fw-semibold mb-1">{{ faculty.get_designation_display }} &bull; Department of {{ faculty.user.department.name|default:"Computer Science" }}</p>
+            <p class="text-muted small mb-0">Employee ID: <code>{{ faculty.employee_id }}</code> &bull; Office: {{ faculty.office_room|default:"Block A Rm 312" }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+            <h5 class="fw-bold mb-3"><i class="bi bi-lightbulb me-2 text-primary"></i> Research Interests & Biography</h5>
+            <p class="text-muted">{{ faculty.research_interests|default:"Distributed systems, cloud architecture, artificial intelligence in educational technologies, and scalable algorithm design." }}</p>
+            <p class="text-muted">{{ faculty.user.bio|default:"Distinguished faculty member with over 12 years of academic instruction and industry consulting experience." }}</p>
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+            <h5 class="fw-bold mb-3"><i class="bi bi-award me-2 text-warning"></i> Academic Credentials</h5>
+            {% for cred in credentials %}
+                <div class="border-bottom pb-2 mb-2">
+                    <h6 class="fw-bold mb-0">{{ cred.degree_name }}</h6>
+                    <small class="text-muted">{{ cred.institution_name }} &bull; Class of {{ cred.graduation_year }}</small>
+                </div>
+            {% empty %}
+                <p class="text-muted small mb-0">Ph.D. in Computer Science &bull; Stanford University &bull; 2014</p>
+                <p class="text-muted small mb-0">M.S. in Software Engineering &bull; Carnegie Mellon &bull; 2009</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+            <h5 class="fw-bold mb-3"><i class="bi bi-calendar-event me-2 text-info"></i> Office Hours</h5>
+            <p class="text-muted small mb-0">{{ faculty.office_hours|default:"Mondays & Wednesdays: 2:00 PM - 4:00 PM" }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

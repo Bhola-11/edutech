@@ -1,0 +1,46 @@
+﻿{% extends 'base.html' %}
+{% load core_tags %}
+
+{% block title %}My Enrolled Courses - EduTech{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-3 mb-4 border-bottom">
+    <div>
+        <h1 class="h2 fw-bold text-dark mb-0">My Enrolled Courses</h1>
+        <p class="text-muted mb-0">Active coursework, lecture modules, and grading records.</p>
+    </div>
+    <div>
+        <a href="{% url 'courses:course_list' %}" class="btn btn-primary btn-sm">
+            <i class="bi bi-plus-lg me-1"></i> Enroll in More Courses
+        </a>
+    </div>
+</div>
+
+<div class="row g-4">
+    {% for enrollment in enrollments %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100 p-4 bg-white d-flex flex-column justify-content-between">
+                <div>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="badge bg-primary">{{ enrollment.course.code }}</span>
+                        {{ enrollment.status|badge_status }}
+                    </div>
+                    <h5 class="fw-bold mb-1">{{ enrollment.course.title }}</h5>
+                    <p class="text-muted small mb-3"><i class="bi bi-calendar3 me-1"></i> Term: {{ enrollment.semester.name }}</p>
+                    <p class="text-muted small">{{ enrollment.course.summary|default:enrollment.course.description|truncatewords:15 }}</p>
+                </div>
+                <div class="border-top pt-3">
+                    <a href="{% url 'courses:course_detail' slug=enrollment.course.slug %}" class="btn btn-primary w-100">Go to Course</a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-12 text-center py-5 text-muted">
+            <i class="bi bi-journal-x fs-1"></i>
+            <h5 class="fw-bold mt-2">You are not enrolled in any courses</h5>
+            <p class="small">Browse our course catalog and register for your degree modules.</p>
+            <a href="{% url 'courses:course_list' %}" class="btn btn-primary">Browse Courses</a>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+﻿{% extends 'base.html' %}
+{% load core_tags %}
+
+{% block title %}Edit Profile - EduTech{% endblock %}
+
+{% block content %}
+<div class="pt-2 pb-3 mb-4 border-bottom">
+    <h1 class="h2 fw-bold text-dark mb-0">Edit Profile Details</h1>
+    <p class="text-muted mb-0">Update your personal contact details and biographical information.</p>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 bg-white p-4 p-md-5">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row g-3 mb-3">
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">First Name</label>
+                {{ form.first_name }}
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Last Name</label>
+                {{ form.last_name }}
+            </div>
+        </div>
+        <div class="row g-3 mb-3">
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Phone Number</label>
+                {{ form.phone_number }}
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Date of Birth</label>
+                {{ form.date_of_birth }}
+            </div>
+        </div>
+        <div class="row g-3 mb-3">
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Gender</label>
+                {{ form.gender }}
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Profile Picture</label>
+                {{ form.profile_photo }}
+            </div>
+        </div>
+        <div class="mb-4">
+            <label class="form-label fw-semibold">Biography / About Me</label>
+            {{ form.bio }}
+        </div>
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary px-4">Save Profile Changes</button>
+            <a href="{% url 'accounts:profile' %}" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,88 @@
+﻿{% load core_tags %}
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-white sidebar collapse border-end min-vh-100 py-3">
+    <div class="position-sticky">
+        <div class="px-3 mb-3">
+            <small class="text-uppercase text-muted fw-bold tracking-wider" style="font-size: 0.75rem;">Role: {{ user.get_role_display }}</small>
+            <h6 class="mb-0 fw-bold text-truncate">{{ user.get_full_name|default:user.username }}</h6>
+        </div>
+
+        <ul class="nav flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link text-dark py-2 px-3 rounded hover-bg-light" href="{% url 'core:dashboard' %}">
+                    <i class="bi bi-grid-1x2-fill me-2 text-primary"></i> Dashboard
+                </a>
+            </li>
+
+            {% if user.is_superadmin %}
+                <li class="nav-item mt-3 px-3"><small class="text-uppercase text-muted fw-bold" style="font-size: 0.7rem;">Platform Administration</small></li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark py-2 px-3" href="{% url 'institutions:institution_create' %}">
+                        <i class="bi bi-plus-circle me-2 text-success"></i> Provision University
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark py-2 px-3" href="{% url 'accounts:user_list' %}">
+                        <i class="bi bi-people me-2 text-info"></i> Global User Management
+                    </a>
+                </li>
+            {% endif %}
+
+            {% if user.is_institution_admin %}
+                <li class="nav-item mt-3 px-3"><small class="text-uppercase text-muted fw-bold" style="font-size: 0.7rem;">Campus Management</small></li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark py-2 px-3" href="{% url 'institutions:campus_list' %}">
+                        <i class="bi bi-geo-alt me-2 text-primary"></i> Campuses & Facilities
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark py-2 px-3" href="{% url 'institutions:department_list' %}">
+                        <i class="bi bi-diagram-3 me-2 text-primary"></i> Academic Departments
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark py-2 px-3" href="{% url 'courses:course_create' %}">
+                        <i class="bi bi-journal-plus me-2 text-success"></i> Create New Course
+                    </a>
+                </li>
+            {% endif %}
+
+            {% if user.is_instructor %}
+                <li class="nav-item mt-3 px-3"><small class="text-uppercase text-muted fw-bold" style="font-size: 0.7rem;">Instructor Workspace</small></li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark py-2 px-3" href="{% url 'courses:course_create' %}">
+                        <i class="bi bi-plus-square me-2 text-primary"></i> New Course Offering
+                    </a>
+                </li>
+            {% endif %}
+
+            <li class="nav-item mt-3 px-3"><small class="text-uppercase text-muted fw-bold" style="font-size: 0.7rem;">Learner Hub</small></li>
+            <li class="nav-item">
+                <a class="nav-link text-dark py-2 px-3" href="{% url 'enrollments:my_enrollments' %}">
+                    <i class="bi bi-play-circle me-2 text-primary"></i> My Active Courses
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark py-2 px-3" href="{% url 'enrollments:my_applications' %}">
+                    <i class="bi bi-clipboard-check me-2 text-primary"></i> Admission Applications
+                </a>
+            </li>
+
+            <li class="nav-item mt-3 px-3"><small class="text-uppercase text-muted fw-bold" style="font-size: 0.7rem;">Settings & Account</small></li>
+            <li class="nav-item">
+                <a class="nav-link text-dark py-2 px-3" href="{% url 'accounts:profile' %}">
+                    <i class="bi bi-person me-2 text-secondary"></i> Profile & Bio
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark py-2 px-3" href="{% url 'accounts:security_settings' %}">
+                    <i class="bi bi-shield-check me-2 text-secondary"></i> Security & 2FA
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-danger py-2 px-3" href="{% url 'accounts:logout' %}">
+                    <i class="bi bi-power me-2"></i> Sign Out
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
