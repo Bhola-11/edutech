@@ -1,0 +1,43 @@
+﻿/* Curriculum Graph & Timeline Styles */
+.curriculum-roadmap {
+    position: relative;
+    padding: 2rem 0;
+}
+
+.curriculum-term-column {
+    border-right: 1px dashed #cbd5e1;
+    min-height: 450px;
+    padding: 1rem;
+}
+
+.curriculum-term-column:last-child {
+    border-right: none;
+}
+
+.course-card-prereq {
+    border-left: 4px solid #3b82f6;
+    background-color: #ffffff;
+    transition: all 0.2s ease-in-out;
+}
+
+.course-card-prereq:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.course-card-completed {
+    border-left-color: #22c55e;
+    background-color: #f0fdf4;
+}
+
+.gpa-meter-container {
+    height: 12px;
+    border-radius: 6px;
+    background-color: #e2e8f0;
+    overflow: hidden;
+}
+
+.gpa-meter-bar {
+    height: 100%;
+    transition: width 0.4s ease-out;
+}
