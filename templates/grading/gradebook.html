@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Gradebook - {{ course.code }}{% endblock %}
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="h3 fw-bold mb-1"><i class="bi bi-calculator text-primary me-2"></i>Course Gradebook</h2>
+            <p class="text-muted mb-0">{{ course.code }}: {{ course.title }}</p>
+        </div>
+    </div>
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle mb-0 text-center">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="text-start">Student Name</th>
+                            {% for cat in categories %}
+                            <th>{{ cat.name }} ({{ cat.weight_percentage }}%)</th>
+                            {% endfor %}
+                            <th>Total %</th>
+                            <th>Letter</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for enr in enrollments %}
+                        <tr>
+                            <td class="text-start fw-bold">{{ enr.student.get_full_name|default:enr.student.username }}</td>
+                            {% for cat in categories %}
+                            <td>--</td>
+                            {% endfor %}
+                            <td class="fw-bold">{{ enr.final_grade.total_percentage|default:"--" }}%</td>
+                            <td><span class="badge bg-primary">{{ enr.final_grade.letter_grade|default:"--" }}</span></td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="6" class="text-center py-4 text-muted">No enrolled students in course.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

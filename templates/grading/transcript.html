@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Official Academic Transcript - {{ student.username }}{% endblock %}
+{% block content %}
+<div class="container py-4">
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-5">
+            <div class="d-flex justify-content-between border-bottom pb-3 mb-4">
+                <div>
+                    <h3 class="fw-bold text-primary">OFFICIAL ACADEMIC TRANSCRIPT</h3>
+                    <p class="text-muted mb-0">EduTech Institute of Higher Learning &amp; Research</p>
+                </div>
+                <div class="text-end">
+                    <p class="mb-0"><strong>Student:</strong> {{ student.get_full_name|default:student.username }}</p>
+                    <p class="mb-0 text-muted">ID: #{{ student.id }}</p>
+                </div>
+            </div>
+            <table class="table table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th>Course Code</th>
+                        <th>Course Title</th>
+                        <th>Credit Hours</th>
+                        <th>Letter Grade</th>
+                        <th>Grade Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for g in grades %}
+                    <tr>
+                        <td class="fw-bold">{{ g.enrollment.course.code }}</td>
+                        <td>{{ g.enrollment.course.title }}</td>
+                        <td>{{ g.enrollment.course.credit_hours }}</td>
+                        <td><span class="badge bg-secondary">{{ g.letter_grade }}</span></td>
+                        <td>{{ g.grade_points }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="5" class="text-center py-3 text-muted">No completed course grades recorded.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
