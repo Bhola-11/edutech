@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}{{ assignment.title }} - EduTech Enterprise{% endblock %}
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body">
+                    <h3 class="fw-bold">{{ assignment.title }}</h3>
+                    <p class="text-muted">{{ assignment.course.title }} ({{ assignment.course.code }})</p>
+                    <hr>
+                    <h5 class="fw-bold">Instructions & Specifications</h5>
+                    <div class="p-3 bg-light rounded">{{ assignment.instructions_html|safe }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-light fw-bold">Submission Status</div>
+                <div class="card-body">
+                    {% if submission %}
+                    <div class="alert alert-success">Submitted on {{ submission.created_at|date:"M d, H:i" }}</div>
+                    <p><strong>Status:</strong> {{ submission.get_status_display }}</p>
+                    {% if submission.final_score %}
+                    <p><strong>Score:</strong> {{ submission.final_score }} / {{ assignment.total_points }}</p>
+                    {% endif %}
+                    {% else %}
+                    <p class="text-muted">No submission recorded for this assignment.</p>
+                    <a href="{% url 'assignments:submit' assignment.pk %}" class="btn btn-primary w-100">Submit Work</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
