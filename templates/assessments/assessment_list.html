@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Assessments & Quizzes - EduTech Enterprise{% endblock %}
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="h3 fw-bold mb-1"><i class="bi bi-patch-question text-primary me-2"></i>Assessments & Quizzes</h2>
+            <p class="text-muted mb-0">Module quizzes, proctored midterm exams, and laboratory practical assessments.</p>
+        </div>
+        <div class="btn-group">
+            <a href="{% url 'assessments:create' %}" class="btn btn-primary"><i class="bi bi-plus-circle me-1"></i>Create Assessment</a>
+            <a href="{% url 'assessments:sandbox' %}" class="btn btn-outline-secondary"><i class="bi bi-terminal me-1"></i>Coding Sandbox</a>
+        </div>
+    </div>
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Assessment Title</th>
+                            <th>Course</th>
+                            <th>Type</th>
+                            <th>Duration</th>
+                            <th>Points</th>
+                            <th>Proctored</th>
+                            <th>Status</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in assessments %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'assessments:detail' item.pk %}" class="fw-bold text-decoration-none">{{ item.title }}</a>
+                            </td>
+                            <td><span class="badge bg-light text-dark">{{ item.course.code }}</span></td>
+                            <td><span class="badge bg-secondary">{{ item.get_assessment_type_display }}</span></td>
+                            <td><i class="bi bi-clock me-1 text-muted"></i>{{ item.duration_minutes }} mins</td>
+                            <td>{{ item.total_points }} pts</td>
+                            <td>
+                                {% if item.is_proctored %}
+                                <span class="badge bg-warning text-dark"><i class="bi bi-shield-lock me-1"></i>Proctored</span>
+                                {% else %}
+                                <span class="badge bg-light text-muted">Standard</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if item.is_published %}
+                                <span class="badge bg-success">Published</span>
+                                {% else %}
+                                <span class="badge bg-secondary">Draft</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-end">
+                                <a href="{% url 'assessments:detail' item.pk %}" class="btn btn-sm btn-outline-primary">View</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="8" class="text-center py-4 text-muted">No assessments created yet.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}{{ assessment.title }} - EduTech Enterprise{% endblock %}
+{% block content %}
+<div class="container-fluid py-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'assessments:list' %}">Assessments</a></li>
+            <li class="breadcrumb-item active">{{ assessment.title }}</li>
+        </ol>
+    </nav>
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body">
+                    <h3 class="fw-bold">{{ assessment.title }}</h3>
+                    <p class="text-muted">{{ assessment.course.title }} ({{ assessment.course.code }})</p>
+                    <hr>
+                    <div class="row g-3 text-center my-2">
+                        <div class="col-3"><div class="p-2 border rounded"><small class="text-muted d-block">Duration</small><span class="fw-bold">{{ assessment.duration_minutes }}m</span></div></div>
+                        <div class="col-3"><div class="p-2 border rounded"><small class="text-muted d-block">Total Points</small><span class="fw-bold">{{ assessment.total_points }}</span></div></div>
+                        <div class="col-3"><div class="p-2 border rounded"><small class="text-muted d-block">Passing Pct</small><span class="fw-bold">{{ assessment.passing_percentage }}%</span></div></div>
+                        <div class="col-3"><div class="p-2 border rounded"><small class="text-muted d-block">Max Attempts</small><span class="fw-bold">{{ assessment.max_attempts }}</span></div></div>
+                    </div>
+                    {% if assessment.instructions_html %}
+                    <h5 class="fw-bold mt-4">Instructions</h5>
+                    <div class="p-3 bg-light rounded">{{ assessment.instructions_html|safe }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            <h4 class="fw-bold mb-3">Sections & Questions</h4>
+            {% for sec in sections %}
+            <div class="card shadow-sm border-0 mb-3">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <span class="fw-bold">{{ sec.title }}</span>
+                    <span class="badge bg-primary">{{ sec.section_points }} pts</span>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for sq in sec.section_questions.all %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="fw-bold">{{ sq.question.title }}</span>
+                            <small class="text-muted d-block">{{ sq.question.get_question_type_display }} &bull; {{ sq.question.difficulty }} &bull; Bloom's: {{ sq.question.blooms_level }}</small>
+                        </div>
+                        <span class="badge bg-secondary">{{ sq.points_override|default:sq.question.default_points }} pts</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% empty %}
+            <div class="alert alert-info">No sections configured for this assessment.</div>
+            {% endfor %}
+        </div>
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-light fw-bold">Assessment Controls</div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'assessments:sandbox' %}" class="btn btn-outline-primary"><i class="bi bi-code-square me-1"></i>Open Sandbox</a>
+                        <a href="{% url 'examinations:list' %}" class="btn btn-success"><i class="bi bi-play-circle me-1"></i>Schedule Exam Session</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
