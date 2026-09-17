@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}Public Certificate Verification Portal - EduTech Trust{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="text-center mb-4">
+                <i class="bi bi-shield-lock-fill text-primary display-4 mb-2"></i>
+                <h2 class="fw-bold">EduTech Trust Network</h2>
+                <p class="text-muted">Public Cryptographic Certificate Verification Registry</p>
+            </div>
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body p-4">
+                    <form method="get" class="d-flex gap-2">
+                        <input type="text" name="code" class="form-control form-control-lg font-monospace" placeholder="Enter Certificate ID (e.g. CERT-2026-...)" value="{{ query }}">
+                        <button type="submit" class="btn btn-primary btn-lg">Verify</button>
+                    </form>
+                </div>
+            </div>
+            {% if query %}
+            {% if cert and is_valid %}
+            <div class="card shadow-sm border-0 border-success border-top border-4">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-check-circle-fill text-success fs-2 me-3"></i>
+                        <div>
+                            <h4 class="fw-bold mb-0 text-success">Official Verified Credential</h4>
+                            <small class="text-muted">Cryptographic SHA-256 Signature Confirmed</small>
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between"><span>Recipient:</span><strong>{{ cert.student.get_full_name|default:cert.student.username }}</strong></li>
+                        <li class="list-group-item d-flex justify-content-between"><span>Course / Program:</span><strong>{{ cert.course.title }} ({{ cert.course.code }})</strong></li>
+                        <li class="list-group-item d-flex justify-content-between"><span>Issuing Institution:</span><strong>{{ cert.institution.name }}</strong></li>
+                        <li class="list-group-item d-flex justify-content-between"><span>Issue Date:</span><strong>{{ cert.issue_date }}</strong></li>
+                        <li class="list-group-item d-flex justify-content-between"><span>Certificate Number:</span><strong class="font-monospace">{{ cert.certificate_number }}</strong></li>
+                    </ul>
+                </div>
+            </div>
+            {% else %}
+            <div class="alert alert-danger p-4 text-center">
+                <i class="bi bi-x-circle-fill fs-2 d-block mb-2"></i>
+                <h5 class="fw-bold">Certificate Not Found or Invalid</h5>
+                <p class="mb-0">The provided certificate ID could not be validated in the institutional verification registry.</p>
+            </div>
+            {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
