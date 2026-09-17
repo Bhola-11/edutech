@@ -1,9 +1,9 @@
-﻿import random
+import random
 from django.utils import timezone
 from datetime import timedelta
 from django.contrib.auth import login, logout
 from django.contrib.auth.hashers import check_password, make_password
-from .models import User, UserSessionLog, PasswordHistory, TwoFactorToken
+from apps.accounts.models import User, UserSessionLog, PasswordHistory, TwoFactorToken
 from apps.core.models import ActivityLog
 from apps.core.constants import AuditActionChoices
 
