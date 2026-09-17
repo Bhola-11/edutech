@@ -1,4 +1,4 @@
-﻿import os
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,6 +27,11 @@ INSTALLED_APPS = [
     'apps.courses',
     'apps.enrollments',
     'apps.profiles',
+    'apps.assessments',
+    'apps.examinations',
+    'apps.assignments',
+    'apps.grading',
+    'apps.certificates',
 ]
 
 MIDDLEWARE = [
