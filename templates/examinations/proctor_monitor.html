@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Proctor Live Monitor - {{ session.session_code }}{% endblock %}
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="fw-bold mb-1"><i class="bi bi-shield-check text-primary me-2"></i>Live Proctoring Dashboard</h3>
+            <p class="text-muted mb-0">Monitoring Session {{ session.session_code }} &bull; {{ session.assessment.title }}</p>
+        </div>
+    </div>
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-light fw-bold">Active Candidates ({{ attempts.count }})</div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Candidate</th>
+                                    <th>Started At</th>
+                                    <th>Status</th>
+                                    <th>IP Address</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for a in attempts %}
+                                <tr>
+                                    <td><strong>{{ a.student.get_full_name|default:a.student.username }}</strong></td>
+                                    <td>{{ a.started_at|date:"H:i:s" }}</td>
+                                    <td><span class="badge bg-primary">{{ a.get_status_display }}</span></td>
+                                    <td><small class="font-monospace text-muted">{{ a.ip_address }}</small></td>
+                                    <td><button class="btn btn-sm btn-outline-danger">Flag Disqualify</button></td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="5" class="text-center py-3 text-muted">No active candidate sessions.</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-light fw-bold">Live Security Incident Stream</div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        {% for ev in recent_events %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="badge bg-danger me-1">{{ ev.severity }}</span>
+                                <small class="fw-bold">{{ ev.get_event_type_display }}</small>
+                                <small class="text-muted d-block">{{ ev.attempt.student.username }} &bull; {{ ev.captured_at|date:"H:i:s" }}</small>
+                            </div>
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item text-center py-3 text-muted">No security incidents captured.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
